@@ -77,112 +77,144 @@ namespace SGV
         {
             if (chartType == ChartTypeBar)
             {
-                if (displayType == DisplayTypeSplit)
-                {
-                    g.DrawString(data.data, new Font("Arial Black", 20), new SolidBrush(Color.White), new PointF(60, 110));
-                }
-                else
-                {
-                    g.DrawString(data.data, new Font("Arial Black", 40), new SolidBrush(Color.White), new PointF(60, 120));
-                }
+                RenderBarChart(displayType, g, data);
             }
             else
             {
-                StringFormat stringFormat = new StringFormat();
-                RectangleF boundingRect;
+                RenderPieChart(g, data);
+            }
+        }
 
-                stringFormat.Alignment = StringAlignment.Center;
-                stringFormat.LineAlignment = StringAlignment.Center;
+        private static void RenderPieChart(Graphics g, Data data)
+        {
+            StringFormat stringFormat = new StringFormat();
+            RectangleF boundingRect;
 
-                if (data.otherData != "")
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+
+            if (data.otherData != "")
+            {
+                if (data.otherData == "")
                 {
-                    if (data.otherData == "")
-                    {
-                        data.otherData = @"  //{
+                    data.otherData = @"  //{
                 g.Dispose();
                 //    boundingRect = new RectangleF(50, 100, 320, 320);
                 //    g.DrawString(otherData, new Font('Cooper Black', 40), new SolidBrush(Color.White), boundingRect, stringFormat);
                 //}";
-                        StringBuilder x = new StringBuilder(50000);
-                        for (int i = 0; i < 20; i++)
-                        {
-                            x.Append(char.ToUpper(data.otherData[i]));
-                        }
+                    StringBuilder x = new StringBuilder(50000);
+                    for (int i = 0; i < 20; i++)
+                    {
+                        x.Append(char.ToUpper(data.otherData[i]));
                     }
-                    boundingRect = new RectangleF(50, 100, 320, 320);
-                    g.DrawString(data.otherData, new Font("Cooper Black", 40), new SolidBrush(Color.White), boundingRect,
-                        stringFormat);
                 }
-                else
-                {
-                    boundingRect = new RectangleF(50, 100, 160, 160);
-                    g.DrawString(data.someOtherDataObject, new Font("Cooper Black", 20), new SolidBrush(Color.White),
-                        boundingRect, stringFormat);
-                }
+                boundingRect = new RectangleF(50, 100, 320, 320);
+                g.DrawString(data.otherData, new Font("Cooper Black", 40), new SolidBrush(Color.White), boundingRect,
+                    stringFormat);
+            }
+            else
+            {
+                boundingRect = new RectangleF(50, 100, 160, 160);
+                g.DrawString(data.someOtherDataObject, new Font("Cooper Black", 20), new SolidBrush(Color.White),
+                    boundingRect, stringFormat);
+            }
 
-                g.Dispose();
+            g.Dispose();
+        }
+
+        private static void RenderBarChart(string displayType, Graphics g, Data data)
+        {
+            if (displayType == DisplayTypeSplit)
+            {
+                g.DrawString(data.data, new Font("Arial Black", 20), new SolidBrush(Color.White), new PointF(60, 110));
+            }
+            else
+            {
+                g.DrawString(data.data, new Font("Arial Black", 40), new SolidBrush(Color.White), new PointF(60, 120));
             }
         }
 
         private Data GetData(string displayType)
         {
-            Data data = new Data();
-
             if (chartType == ChartTypeBar)
             {
-                if (displayType == DisplayTypeFull)
-                {
-                    data.data = "Bar Data\nLarge";
-                }
-                else
-                {
-                    data.data = "Bar Data\nSmall";
-                }
+                return GetBarChartData(displayType);
             }
             else
             {
-                if (displayType == DisplayTypeFull)
-                {
-                    data.otherData = "Pie Data\nLarge";
-                }
-                else
-                {
-                    data.someOtherDataObject = "Pie Data\nSmall";
-                }
+                return GetPieChartData(displayType);
+            }
+        }
+
+        private static Data GetPieChartData(string displayType)
+        {
+            Data data = new Data();
+            if (displayType == DisplayTypeFull)
+            {
+                data.otherData = "Pie Data\nLarge";
+            }
+            else
+            {
+                data.someOtherDataObject = "Pie Data\nSmall";
+            }
+            return data;
+        }
+
+        private static Data GetBarChartData(string displayType)
+        {
+            Data data = new Data();
+            if (displayType == DisplayTypeFull)
+            {
+                data.data = "Bar Data\nLarge";
+            }
+            else
+            {
+                data.data = "Bar Data\nSmall";
             }
             return data;
         }
 
         private void RenderChartBackground(string displayType, Graphics g)
         {
-            SolidBrush brush;
-            if (chartType == 150)
+            if (chartType == ChartTypeBar)
             {
-                if (displayType == DisplayTypeFull)
-                {
-                    brush = new SolidBrush(Color.Red);
-                    g.FillRectangle(brush, 50, 100, 300, 300);
-                }
-                else
-                {
-                    brush = new SolidBrush(Color.Red);
-                    g.FillRectangle(brush, 50, 100, 150, 150);
-                }
+                RenderBarChartBackground(displayType, g);
             }
             else
             {
-                if (displayType != DisplayTypeFull)
-                {
-                    brush = new SolidBrush(Color.Blue);
-                    g.FillEllipse(brush, 50, 100, 160, 160);
-                }
-                else
-                {
-                    brush = new SolidBrush(Color.Blue);
-                    g.FillEllipse(brush, 50, 100, 320, 320);
-                }
+                RenderPieChartBackground(displayType, g);
             }
+        }
 
+        private static void RenderPieChartBackground(string displayType, Graphics g)
+        {
+            SolidBrush brush;
+            if (displayType != DisplayTypeFull)
+            {
+                brush = new SolidBrush(Color.Blue);
+                g.FillEllipse(brush, 50, 100, 160, 160);
+            }
+            else
+            {
+                brush = new SolidBrush(Color.Blue);
+                g.FillEllipse(brush, 50, 100, 320, 320);
+            }
+            brush.Dispose();
+        }
+
+        private static void RenderBarChartBackground(string displayType, Graphics g)
+        {
+            SolidBrush brush;
+            if (displayType == DisplayTypeFull)
+            {
+                brush = new SolidBrush(Color.Red);
+                g.FillRectangle(brush, 50, 100, 300, 300);
+            }
+            else
+            {
+                brush = new SolidBrush(Color.Red);
+                g.FillRectangle(brush, 50, 100, 150, 150);
+            }
             brush.Dispose();
         }
 
