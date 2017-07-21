@@ -2,9 +2,9 @@ using System.Drawing;
 
 namespace SGV
 {
-    public class BarChart
+    public class BarChart : IChart
     {
-        public static void RenderBarChart(string displayType, Graphics g, Data data)
+        public void Render(string displayType, Graphics g, Data data)
         {
             if (displayType == ChartSingleCompareOrig.DisplayTypeSplit)
             {
@@ -16,7 +16,7 @@ namespace SGV
             }
         }
 
-        public static Data GetBarChartData(string displayType)
+        public Data GetData(string displayType)
         {
             Data data = new Data();
             if (displayType == ChartSingleCompareOrig.DisplayTypeFull)
@@ -30,7 +30,7 @@ namespace SGV
             return data;
         }
 
-        public static void RenderBarChartBackground(string displayType, Graphics g)
+        public void RenderBackground(string displayType, Graphics g)
         {
             SolidBrush brush;
             if (displayType == ChartSingleCompareOrig.DisplayTypeFull)

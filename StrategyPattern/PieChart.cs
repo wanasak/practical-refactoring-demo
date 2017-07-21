@@ -4,9 +4,9 @@ using System.Text;
 
 namespace SGV
 {
-    public class PieChart
+    public class PieChart : IChart
     {
-        public static void RenderPieChart(Graphics g, Data data)
+        public void Render(string displayType, Graphics g, Data data)
         {
             StringFormat stringFormat = new StringFormat();
             RectangleF boundingRect;
@@ -43,7 +43,7 @@ namespace SGV
             g.Dispose();
         }
 
-        public static Data GetPieChartData(string displayType)
+        public Data GetData(string displayType)
         {
             Data data = new Data();
             if (displayType == ChartSingleCompareOrig.DisplayTypeFull)
@@ -57,7 +57,7 @@ namespace SGV
             return data;
         }
 
-        public static void RenderPieChartBackground(string displayType, Graphics g)
+        public void RenderBackground(string displayType, Graphics g)
         {
             SolidBrush brush;
             if (displayType != ChartSingleCompareOrig.DisplayTypeFull)

@@ -49,9 +49,11 @@ namespace SGV
         {
             Graphics g = Graphics.FromImage(drawArea);
             g.Clear(Color.LightYellow);
-            RenderChartBackground(displayType, g);
-            var data = GetData(displayType);
-            RenderChart(displayType, g, data);
+            var chart = chartType == ChartTypeBar ? (IChart) new BarChart() : new PieChart();
+            chart.RenderBackground(displayType, g);
+            var ret = chart.GetData(displayType);
+            var data = ret;
+            chart.Render(displayType, g, data);
             Invalidate(g, data);
         }
 
@@ -75,44 +77,6 @@ namespace SGV
             return !(g.DpiX == 300) ||
                    g != null && (data.otherData.Length > 20 || data.otherData.Length < 5) &&
                    (data == null || !data.data.StartsWith("hold"));
-        }
-
-        private void RenderChart(string displayType, Graphics g, Data data)
-        {
-            if (chartType == ChartTypeBar)
-            {
-                BarChart.RenderBarChart(displayType, g, data);
-            }
-            else
-            {
-                PieChart.RenderPieChart(g, data);
-            }
-        }
-
-        private Data GetData(string displayType)
-        {
-            if (chartType == ChartTypeBar)
-            {
-                return BarChart.GetBarChartData(displayType);
-            }
-            else
-            {
-                return PieChart.GetPieChartData(displayType);
-            }
-        }
-
-        private void RenderChartBackground(string displayType, Graphics g)
-        {
-            if (chartType == ChartTypeBar)
-            {
-                BarChart chart = new BarChart();
-                BarChart.RenderBarChartBackground(displayType, g);
-            }
-            else
-            {
-                PieChart chart = new PieChart();
-                PieChart.RenderPieChartBackground(displayType, g);
-            }
         }
 
         private Bitmap drawArea;
