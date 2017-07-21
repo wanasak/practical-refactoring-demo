@@ -70,6 +70,7 @@
     <Compile Include="ChartSingleCompareOrig.Designer.cs">
       <DependentUpon>ChartSingleCompareOrig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>

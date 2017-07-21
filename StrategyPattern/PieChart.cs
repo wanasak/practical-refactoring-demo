@@ -46,7 +46,7 @@ namespace SGV
         public Data GetData(string displayType)
         {
             Data data = new Data();
-            if (displayType == ChartSingleCompareOrig.DisplayTypeFull)
+            if (displayType == ChartSingleCompareOrig.DisplayType.Full)
             {
                 data.otherData = "Pie Data\nLarge";
             }
@@ -60,7 +60,7 @@ namespace SGV
         public void RenderBackground(string displayType, Graphics g)
         {
             SolidBrush brush;
-            if (displayType != ChartSingleCompareOrig.DisplayTypeFull)
+            if (displayType != ChartSingleCompareOrig.DisplayType.Full)
             {
                 brush = new SolidBrush(Color.Blue);
                 g.FillEllipse(brush, 50, 100, 160, 160);

@@ -6,7 +6,7 @@ namespace SGV
     {
         public void Render(string displayType, Graphics g, Data data)
         {
-            if (displayType == ChartSingleCompareOrig.DisplayTypeSplit)
+            if (displayType == ChartSingleCompareOrig.DisplayType.Split)
             {
                 g.DrawString(data.data, new Font("Arial Black", 20), new SolidBrush(Color.White), new PointF(60, 110));
             }
@@ -19,7 +19,7 @@ namespace SGV
         public Data GetData(string displayType)
         {
             Data data = new Data();
-            if (displayType == ChartSingleCompareOrig.DisplayTypeFull)
+            if (displayType == ChartSingleCompareOrig.DisplayType.Full)
             {
                 data.data = "Bar Data\nLarge";
             }
@@ -33,7 +33,7 @@ namespace SGV
         public void RenderBackground(string displayType, Graphics g)
         {
             SolidBrush brush;
-            if (displayType == ChartSingleCompareOrig.DisplayTypeFull)
+            if (displayType == ChartSingleCompareOrig.DisplayType.Full)
             {
                 brush = new SolidBrush(Color.Red);
                 g.FillRectangle(brush, 50, 100, 300, 300);

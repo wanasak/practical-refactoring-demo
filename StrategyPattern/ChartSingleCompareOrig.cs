@@ -8,8 +8,13 @@ namespace SGV
     public partial class ChartSingleCompareOrig : Form
     {
         public const int ChartTypeBar = 150;
-        public const string DisplayTypeFull = "rpfll";
-        public const string DisplayTypeSplit = "splitdisplay";
+
+        public class DisplayType
+        {
+            public const string Full = "rpfll";
+            public const string Split = "splitdisplay";
+        }
+
         private string displayType;
         private int chartType;
 
@@ -80,12 +85,5 @@ namespace SGV
         }
 
         private Bitmap drawArea;
-    }
-    
-    public class Data
-    {
-        public string data = null;
-        public string otherData = "";
-        public string someOtherDataObject = null;
     }
 }
